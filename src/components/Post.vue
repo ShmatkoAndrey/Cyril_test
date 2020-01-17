@@ -2,14 +2,22 @@
   <div class="post">
     <div class="author">
       <img class="author-avatar" :src="post.author.avatar" />
-      <div class="author-name">{{post.author.name}}</div>
+      <a class="author-name" href="https://www.google.com/" target="_blank">{{post.author.name}}</a>
     </div>
     <div class="product">
       <img :src="post.image" class="product-image">
       <div class="product-info">
         <div class="product-title">{{post.title}}</div>
         <div class="price">{{post.price}}</div>
-        <div class="controls"></div>
+        <div class="controls">
+          <span class="mdi mdi-chat-outline" :title="post.messages.length">
+            <div class="count" v-show="post.messages.length > 0">{{post.messages.length}}</div>
+          </span>
+          <span class="mdi mdi-heart-outline" @click="like" v-show="post.likes === 0"></span>
+          <span class="mdi mdi-heart" @click="like" :class="{'active': post.like}" v-show="post.likes > 0" :title="post.likes">
+            <div class="count">{{post.likes > 9 ? '9+' : post.likes}}</div>
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -18,13 +26,19 @@
 <script>
 export default {
   name: "Post",
-  props: ['post']
+  props: ['post'],
+  methods: {
+    like() {
+      this.$store.dispatch("like", {id: this.post.id});
+    }
+  }
 }
 </script>
 
 <style lang="scss">
 .post {
   width: 200px;
+  margin-bottom: 10px;
 
   .author {
     display: flex;
@@ -34,8 +48,12 @@ export default {
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      // object-fit: cover;
       margin-right: 12px;
+    }
+    .author-name {
+      text-decoration: none;
+      color: black;
+      font-size: 14px;
     }
   }
   .product {
@@ -58,15 +76,42 @@ export default {
 
     .product-info {
       position: relative;
-      padding: 16px 12px;
+      padding: 12px;
       display: flex;
       justify-content: space-between;
-
+      align-items: center;
       .price {
         font-size: 10px;
       }
       .controls {
+        display: flex;
+        align-items: center;
+        span {
+          &.mdi-heart-outline:hover, &.mdi-heart:not(.active):hover  {
+            color: rgba(255, 0, 0, 0.7);
+          }
+          &.mdi-chat-outline:hover {
+            color: rgba(0, 128, 0, 0.5);
+          }
 
+          cursor: pointer;
+          font-size: 18px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          .count {
+            font-size: 8px;
+            position: absolute;
+          }
+          &.mdi-heart .count {
+            color: white;
+          }
+          &.active {
+            color: red;
+
+          }
+        }
       }
     }
     .product-title {

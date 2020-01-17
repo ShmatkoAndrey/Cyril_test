@@ -20,6 +20,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss">
+#feed {
+  width: 220px;
+  max-height: 730px;
+  overflow: auto;
+}
 </style>
