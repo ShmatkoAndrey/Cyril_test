@@ -99,7 +99,7 @@ export default {
         span {
           user-select: none;
           &.mdi-heart-outline:hover, &.mdi-heart:not(.active):hover  {
-            color: rgba(255, 0, 0, 0.7);
+            color: rgba(255, 0, 0, 0.5);
           }
           &.mdi-chat-outline:hover {
             color: rgba(0, 128, 0, 0.5);
