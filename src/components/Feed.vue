@@ -22,8 +22,10 @@ export default {
 
 <style lang="scss">
 #feed {
-  width: 220px;
+  width: 230px;
   max-height: 730px;
   overflow: auto;
+  padding-left: 8px;
+  background-color: rgb(240, 240, 240);
 }
 </style>
